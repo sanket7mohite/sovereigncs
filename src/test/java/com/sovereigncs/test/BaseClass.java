@@ -43,15 +43,8 @@ public class BaseClass {
 
 	@BeforeTest
 	public void setup() throws IOException {
-		
 
-		
-		
 		System.out.println("Setup Function has been called...");
-
-//		logger =logger.getLogger("eBanking");
-		PropertyConfigurator.configure("log4j.properties");
-
 		System.out.println("Iniztialing chrome driver...");
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
