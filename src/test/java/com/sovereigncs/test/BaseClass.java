@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +38,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class BaseClass {
 
 	public static WebDriver driver;
-
+	public File AutmSnapfile;
 	ReadConfig readconfig = new ReadConfig();
 	public String baseURL = readconfig.getAppURL();
 	public static Logger logger;
@@ -50,6 +52,8 @@ public class BaseClass {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(baseURL);
+		captureScreen(driver, "TC_Login");
+		
 	}
 
 	public static void drawBorder(WebDriver driver, WebElement element) throws InterruptedException {
@@ -87,6 +91,19 @@ public class BaseClass {
 		} catch (Exception ex) {
 			System.out.println("Error: " + Label + " " + ex.getMessage());
 		}
+	}
+   
+   public void captureScreen(WebDriver driver, String tname) throws IOException 
+	{
+	   
+
+	   
+		TakesScreenshot sc = (TakesScreenshot)driver;
+		File src = sc.getScreenshotAs(OutputType.FILE);
+		File target = new File(System.getProperty("user.dir")+"/ScreenShots/" + tname + ".png");
+		FileUtils.copyFile(src, target);
+		System.out.println("ScreenShot Taken"); 
+	
 	}
 
 	@AfterTest

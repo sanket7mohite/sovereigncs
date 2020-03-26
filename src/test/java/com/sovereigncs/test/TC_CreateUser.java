@@ -15,7 +15,7 @@ public class TC_CreateUser extends BaseClass {
 
 	@Test(dataProvider = "register")
 	public void register(String FirstName, String LastName, String DOB, String Company, String Address1, String City,
-			String State, String ZipCode, String Mobile, String Alias_Address)
+			String State, String ZipCode, String Mobile, String Alias_Address,String Email, String Password)
 			throws InterruptedException, IOException {
 
 		System.out.println("Register Function has been called...!");
