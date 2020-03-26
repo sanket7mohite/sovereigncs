@@ -8,11 +8,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -32,7 +34,6 @@ import org.testng.annotations.BeforeTest;
 import com.google.common.base.Function;
 import com.sovereigncs.utilities.ReadConfig;
 import com.sovereigncs.utilities.XLUtils;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseClass {
@@ -52,10 +53,38 @@ public class BaseClass {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(baseURL);
-		captureScreen(driver, "TC_Login");
+		captureScreen(driver, "Home Page");
 		
 	}
-
+	
+	public void checkFramePopup(WebDriver driver, WebElement element, String Label) throws InterruptedException, IOException {
+		
+		waitforpageload(driver, 5);
+		List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
+		
+		for (WebElement iframe : iframes) {
+			driver.switchTo().frame(iframe);
+			buttonClick(driver, element, 30, Label);
+			
+		}
+		driver.switchTo().defaultContent();
+	}
+	
+	public void mouseHover(WebDriver driver,WebElement element, int waitAfterClick, String label) throws InterruptedException, IOException {
+	Actions actions = new Actions(driver);
+	drawBorder(driver,element);
+ 	actions.moveToElement(element).build().perform();
+ 	
+	}
+	
+	   public static void buttonClick(WebDriver driver,WebElement element, int waitAfterClick, String label) throws InterruptedException, IOException {
+				drawBorder(driver,element);
+				element.click(); 
+				waitforpageload(driver, waitAfterClick);
+				System.out.println(label);
+				
+			}	
+	   
 	public static void drawBorder(WebDriver driver, WebElement element) throws InterruptedException {
 
 		if (driver instanceof JavascriptExecutor) {

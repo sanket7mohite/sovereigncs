@@ -1,0 +1,16 @@
+QA Automation Testing Assignment
+Using Selenium WebDriver and TestNG, automate the following site:
+URL: http://automationpractice.com/index.php
+Flow:
+1. Create Account under Sign In.
+2. Login with new user credentials.
+3. On WOMAN section, select any 1 product by clicking on QUICK VIEW and adding 2 Qty for the
+product to cart.
+4. Complete the checkout process by completing the payment flow and in process verifying the total
+cost of product wherever visible.
+5. After completing the payment process, under Profile page, verify the amount of order under
+ORDER HISTORY.s
+Note:
+1. All the steps mentioned in the flow should be automated including Account creation.
+2. There is no restriction in terms of coding but it would be better if you can create you own
+framework to ease your task.
