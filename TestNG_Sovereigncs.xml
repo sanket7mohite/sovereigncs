@@ -3,6 +3,7 @@
 <suite name="com.sovereigncs.test" verbose="1" >
   <test name="com.sovereigncs.test" >
     <classes>
+
        <class name="com.sovereigncs.test.TC_Login" />
         <class name="com.sovereigncs.test.TC_AddProduct" />
     </classes>

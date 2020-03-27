@@ -120,6 +120,30 @@ public class ObjectRepository {
 	public WebElement clickbtnConfirmOrder() {
 		return btnConfirmOrder;
 	}
+	
+	
+	//*****************Profile Page********************************
+	
+	@FindBy(xpath = "//a[@title='View my customer account']") 
+	private WebElement btnViewCustAccnt;
+	
+	public WebElement clickbtnViewCustAccnt() {
+		return btnViewCustAccnt;
+	}
+	
+	@FindBy(xpath = "//i[@class='icon-list-ol']//following-sibling::span") 
+	private WebElement btnOrderHistory;
+	
+	public WebElement clickbtnOrderHistory() {
+		return btnOrderHistory;
+	}
+	
+	@FindBy(xpath = "//table[@id='order-list']//tbody//tr[@class='first_item ']//td[@class='history_price']") 
+	private WebElement txtHistory_price;
+	
+	public WebElement gettxtHistory_price() {
+		return txtHistory_price;
+	}
 }
 
 

@@ -11,9 +11,10 @@ import com.sovereigncs.utilities.XLUtils;
 public class TC_Login extends BaseClass {
 	
 	@Test(dataProvider="login")
-	public void Login(String FirstName, String LastName, String DOB, String Company, String Address1, String City,
+	public void login(String FirstName, String LastName, String DOB, String Company, String Address1, String City,
 			String State, String ZipCode, String Mobile, String Alias_Address, String Email, String Password) throws InterruptedException, IOException {
 		System.out.println("Login Fucntion has been called...!");
+		logger.info("Login Fucntion has been called...!");
 		Login lg =  new Login(driver);
 		lg.clickSiginIn();
 		lg.settxtEmail(Email);

@@ -13,7 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -25,13 +26,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import org.slf4j.Logger;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 
 import com.google.common.base.Function;
+import com.sovereigncs.repo.LoadManager;
 import com.sovereigncs.utilities.ReadConfig;
 import com.sovereigncs.utilities.XLUtils;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -46,9 +48,13 @@ public class BaseClass {
 
 	@BeforeTest
 	public void setup() throws IOException {
-
-		System.out.println("Setup Function has been called...");
-		System.out.println("Iniztialing chrome driver...");
+		logger = LogManager.getLogger(BaseClass.class);
+		
+		logger.info("Setup Function has been called...");
+//		logger.error("test_error");
+//		logger.fatal("test_fatal");
+		
+//		System.out.println("Setup Function has been called...");
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
@@ -58,7 +64,7 @@ public class BaseClass {
 	}
 	
 	public void checkFramePopup(WebDriver driver, WebElement element, String Label) throws InterruptedException, IOException {
-		
+		logger.info("checkFramePopup Function has been called...");
 		waitforpageload(driver, 5);
 		List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
 		
@@ -71,6 +77,7 @@ public class BaseClass {
 	}
 	
 	public void mouseHover(WebDriver driver,WebElement element, int waitAfterClick, String label) throws InterruptedException, IOException {
+		logger.info(" Function has been called...");
 	Actions actions = new Actions(driver);
 	drawBorder(driver,element);
  	actions.moveToElement(element).build().perform();
@@ -78,6 +85,7 @@ public class BaseClass {
 	}
 	
 	   public static void buttonClick(WebDriver driver,WebElement element, int waitAfterClick, String label) throws InterruptedException, IOException {
+		   logger.info(" Function has been called...");
 				drawBorder(driver,element);
 				element.click(); 
 				waitforpageload(driver, waitAfterClick);
@@ -86,6 +94,7 @@ public class BaseClass {
 			}	
 	   
 	public static void drawBorder(WebDriver driver, WebElement element) throws InterruptedException {
+		logger.info("drawBorder Function has been called...");
 
 		if (driver instanceof JavascriptExecutor) {
 			((JavascriptExecutor) driver).executeScript("arguments[0].style.border='6.5px solid rgb(0, 230, 0)'",
@@ -110,7 +119,8 @@ public class BaseClass {
 	};
 	
    public static void waitforpageload(WebDriver driver, int iTimeOut) {
-		System.out.println("Wait for Page load......");
+	   logger.info("waitforpageload Function has been called...");
+		
 		String Label = "";
 		try {
 			Label = driver.getTitle();
@@ -124,9 +134,7 @@ public class BaseClass {
    
    public void captureScreen(WebDriver driver, String tname) throws IOException 
 	{
-	   
-
-	   
+	   logger.info("captureScreen Function has been called...");
 		TakesScreenshot sc = (TakesScreenshot)driver;
 		File src = sc.getScreenshotAs(OutputType.FILE);
 		File target = new File(System.getProperty("user.dir")+"/ScreenShots/" + tname + ".png");

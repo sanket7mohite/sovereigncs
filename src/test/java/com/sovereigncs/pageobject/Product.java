@@ -19,6 +19,7 @@ public class Product extends BaseClass {
 	public ObjectRepository objectrepository = null;
 	String display_product_price ="";
 	String labelTotalPrice ="";
+	String historyPrice ="";
 
 	public Product(WebDriver driver) {
 		objectrepository = ObjectRepository.getInstance(driver);
@@ -70,8 +71,14 @@ public class Product extends BaseClass {
 		String curr_tilte = driver.getTitle();
 		String exp_title= "Order confirmation - My Store";
 		Assert.assertEquals(curr_tilte, exp_title);
-		
-		
+			
 	}
 
+	
+	public void profile(WebDriver driver) throws InterruptedException, IOException {
+		buttonClick(driver, objectrepository.clickbtnViewCustAccnt(), 10, "Click clickbtnViewCustAccnt");
+		buttonClick(driver, objectrepository.clickbtnOrderHistory(), 10, "Click clickbtnOrderHistory");
+		historyPrice = objectrepository.gettxtHistory_price().getText();
+		System.out.println("historyPrice-->" +historyPrice);
+	}
 }
