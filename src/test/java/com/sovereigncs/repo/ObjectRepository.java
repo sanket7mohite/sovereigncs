@@ -56,6 +56,10 @@ public class ObjectRepository {
 	@FindBy(xpath = "//div[@id='HOOK_SHOPPING_CART']//following-sibling::p//a[@title='Proceed to checkout']") 
 	private WebElement btnCheckOut;
 	
+	@FindBy(xpath = "//td[@class='cart_unit']//span//span") 
+	private WebElement lableCartUnit;
+	
+	
 	@FindBy(xpath = "//button[@name='processAddress']") 
 	private WebElement btnCheckOutAddress;
 	
@@ -101,6 +105,9 @@ public class ObjectRepository {
 	}
 	public WebElement clickbtnCheckOut() {
 		return btnCheckOut;
+	}
+	public WebElement getlableCartUnit() {
+		return lableCartUnit;
 	}
 	
 	public WebElement clickbtnCheckOutAddress() {

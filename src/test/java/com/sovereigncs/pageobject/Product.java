@@ -17,9 +17,14 @@ import com.sovereigncs.test.BaseClass;
 public class Product extends BaseClass {
 
 	public ObjectRepository objectrepository = null;
-	String display_product_price ="";
-	String labelTotalPrice ="";
-	String historyPrice ="";
+	String display_product_price = "";
+	String labelTotalPrice = "";
+	String historyPrice = "";
+	String cart_unit = "";
+	int total_shipping = 2;
+	float toal_product_price;
+	float total_TotalPrice;
+	float history_Price;
 
 	public Product(WebDriver driver) {
 		objectrepository = ObjectRepository.getInstance(driver);
@@ -38,47 +43,65 @@ public class Product extends BaseClass {
 		for (WebElement iframe : iframes) {
 			driver.switchTo().frame(iframe);
 			display_product_price = objectrepository.getlabelProductPrice().getText();
-			System.out.println("display_product_price->"+display_product_price);
+			System.out.println("display_product_price->" + display_product_price);
 			buttonClick(driver, objectrepository.clickbtnAddQuantity(), 5, "Click Add Qunantity");
 			buttonClick(driver, objectrepository.clickbtnAddtoCart(), 5, "Click Add to Cart");
 		}
 		driver.switchTo().defaultContent();
 		buttonClick(driver, objectrepository.clickbtnProceedToCheckOut(), 5, "Click on Proceed To Checkout");
-		
-		/*String total_product = objectrepository.getlabelProductPrice().getText();
-		int toal_product_price = Integer.parseInt(display_product_price)*2;
-		System.out.println("toal_product_price->"+toal_product_price);
-		labelTotalPrice = driver.findElement((By) objectrepository.getlabelTotalPrice()).getText();
-		
-		int total_TotalPrice =  Integer.parseInt(labelTotalPrice);
-		System.out.println("total_TotalPrice->"+total_TotalPrice);
-		Assert.assertEquals(toal_product_price, total_TotalPrice);
-		*/
-	}
-	public void checkOut(WebDriver driver) throws InterruptedException, IOException{
-		System.out.println("CheckOut function has been called..");
-		buttonClick(driver, objectrepository.clickbtnCheckOut(), 10, "Click on Proceed to checkOut");
-		buttonClick(driver, objectrepository.clickbtnCheckOutAddress(), 3, "Click on Proceed to CheckOutAddress");
-		
-		buttonClick(driver, objectrepository.clickchkTermsCondition(), 3, "Click on chkTermsCondition");
-		buttonClick(driver, objectrepository.clickbtnCheckOutCarrier(), 3, "Click on Proceed to CheckOutCarrier");
-		
-		
-		
-		buttonClick(driver, objectrepository.clickbtnPayByWire(), 3, "Click clickbtnPayByWire");
-		buttonClick(driver, objectrepository.clickbtnConfirmOrder(), 3, "Click clickbtnConfirmOrder");
-		
-		String curr_tilte = driver.getTitle();
-		String exp_title= "Order confirmation - My Store";
-		Assert.assertEquals(curr_tilte, exp_title);
-			
+
 	}
 
-	
+	public void checkOut(WebDriver driver) throws InterruptedException, IOException {
+		System.out.println("CheckOut function has been called..");
+
+		try {
+			cart_unit = objectrepository.getlableCartUnit().getText();
+			cart_unit = cart_unit.replace("$", "");
+			System.out.println("cart_unit-->" + cart_unit);
+
+			 toal_product_price = Float.parseFloat(cart_unit) * 2 + total_shipping;
+
+			labelTotalPrice = objectrepository.getlabelTotalPrice().getText();
+			labelTotalPrice = labelTotalPrice.replace("$", "");
+
+			 total_TotalPrice = Float.parseFloat(labelTotalPrice);
+
+			System.out.println("total_TotalPrice->" + total_TotalPrice);
+
+			Assert.assertEquals(toal_product_price, total_TotalPrice);
+			captureScreen(driver, "checkOut Function-Success & verifying the total cost of product");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			captureScreen(driver, "checkOut Function  & Failed in verifying the total cost of product");
+		}
+
+		buttonClick(driver, objectrepository.clickbtnCheckOut(), 10, "Click on Proceed to checkOut");
+		buttonClick(driver, objectrepository.clickbtnCheckOutAddress(), 3, "Click on Proceed to CheckOutAddress");
+
+		buttonClick(driver, objectrepository.clickchkTermsCondition(), 3, "Click on chkTermsCondition");
+		buttonClick(driver, objectrepository.clickbtnCheckOutCarrier(), 3, "Click on Proceed to CheckOutCarrier");
+
+		buttonClick(driver, objectrepository.clickbtnPayByWire(), 3, "Click clickbtnPayByWire");
+		buttonClick(driver, objectrepository.clickbtnConfirmOrder(), 3, "Click clickbtnConfirmOrder");
+
+		String curr_tilte = driver.getTitle();
+		String exp_title = "Order confirmation - My Store";
+		Assert.assertEquals(curr_tilte, exp_title);
+		captureScreen(driver, "checkOut Function-Success");
+
+	}
+
 	public void profile(WebDriver driver) throws InterruptedException, IOException {
 		buttonClick(driver, objectrepository.clickbtnViewCustAccnt(), 10, "Click clickbtnViewCustAccnt");
 		buttonClick(driver, objectrepository.clickbtnOrderHistory(), 10, "Click clickbtnOrderHistory");
 		historyPrice = objectrepository.gettxtHistory_price().getText();
-		System.out.println("historyPrice-->" +historyPrice);
+		historyPrice = historyPrice.replace("$", "");
+		
+		 history_Price = Float.parseFloat(labelTotalPrice);
+		System.out.println("historyPrice-->" + history_Price);
+		Assert.assertEquals(history_Price, total_TotalPrice);
+		
 	}
 }
