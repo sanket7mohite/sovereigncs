@@ -80,6 +80,8 @@ public class TC_CreateUser extends BaseClass {
 			XLUtils.setCellData(path, "Sheet", i, 10, email);
 			XLUtils.setCellData(path, "Sheet", i, 11, password);
 		}
+		
+		reg.CickclickLogout();
 	}
 
 	@DataProvider(name = "register")

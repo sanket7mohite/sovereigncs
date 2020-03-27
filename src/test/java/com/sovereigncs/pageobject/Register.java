@@ -108,6 +108,10 @@ WebDriver localdriver;
 	@CacheLookup
 	WebElement clickSubmitAccount;
 	
+	@FindBy(xpath="//div[@class='header_user_info']//a[@class='logout']")
+	@CacheLookup
+	WebElement clickLogout;
+	
 	
 	public void clickSiginIn() throws InterruptedException 
 	{
@@ -250,6 +254,11 @@ WebDriver localdriver;
 	{	
 		drawBorder(driver, clickSubmitAccount);
 		clickSubmitAccount.click();
+	}
+	public void CickclickLogout() throws InterruptedException 
+	{	
+		drawBorder(driver, clickLogout);
+		clickLogout.click();
 	}
 	
 	
